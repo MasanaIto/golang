@@ -2,29 +2,24 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"os"
 )
 
-func getOsName() string {
-	return "mac"
+// defer ... main関数の処理が終わったら呼び出される
+
+func foo() {
+	defer fmt.Println("world")
+
+	fmt.Println("hello")
 }
 
+// lesson.go ファイルの 100byte分だけ出力する
 func main() {
-	switch os := getOsName(); os {
-	case "mac":
-		fmt.Println("Mac")
-	case "windows":
-		fmt.Println("Windows")
-	default:
-		fmt.Println("Default!", os)
-	}
-
-	t := time.Now()
-	fmt.Println(t.Hour())
-	switch {
-	case t.Hour() < 12:
-		fmt.Println("Morning!")
-	case t.Hour() < 17:
-		fmt.Println("afternoon")
-	}
+	foo()
+	file, _ := os.Open("./lesson.go")
+	// fileをオープンすると、クローズする処理を入れなくてはならない
+	defer file.Close()
+	data := make([]byte, 100)
+	file.Read(data)
+	fmt.Println(string(data))
 }
