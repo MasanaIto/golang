@@ -1,30 +1,34 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 /*
-UserNotFound ...
+Vertex ...
 */
-type UserNotFound struct {
-	Username string
+type Vertex struct {
+	X, Y int
 }
 
-// エラーを作る時は、ポインタで*, ＆を付けるのが慣習
-func (e *UserNotFound) Error() string {
-	return fmt.Sprintf("User not found: %v", e.Username)
+/*
+Plus ... Q1. 以下に、7と表示されるメソッドを作成してください。
+*/
+func (v Vertex) Plus() int {
+	return v.X + v.Y
 }
 
-func myFunc() error {
-	// 他のエラー
-	ok := false
-	if ok {
-		return nil
-	}
-	return &UserNotFound{Username: "Masana"}
+// func main() {
+// 	v := Vertex{3, 4}
+// 	fmt.Println(v.Plus()) // 7
+// }
+
+// Q2 X is 3! Y is 4! と表示されるStringerを作成してください。
+func (v Vertex) String() string {
+	return fmt.Sprintf("X is %d! Y is %d!", v.X, v.Y)
 }
 
 func main() {
-	if err := myFunc(); err != nil {
-		fmt.Println(err) // User not found: Masana
-	}
+	v := Vertex{3, 4}
+	fmt.Println(v) // X is 3! Y is 4!
 }
