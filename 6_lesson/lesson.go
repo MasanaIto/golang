@@ -2,30 +2,17 @@ package main
 
 import "fmt"
 
-type Human interface {
-	Say() string
-}
-
 type Person struct {
 	Name string
+	Age  int
 }
 
-func (p *Person) Say() string {
-	p.Name = p.Name
-	fmt.Println(p.Name)
-	return p.Name
-}
-
-func Access(human Human) {
-	if human.Say() == "Masana" {
-		fmt.Println("OK, WELCOME MASANA.")
-	} else {
-		fmt.Println("You do not have access")
-	}
+// struct の Person を書き換えたい場合、Stringerを使う
+func (p Person) String() string {
+	return fmt.Sprintf("My Name is %v.", p.Name)
 }
 
 func main() {
-	var masana Human = &Person{"Masana"}
-	masana.Say() // Mr.Masana
-	Access(masana)
+	masana := Person{"Masana", 20}
+	fmt.Println(masana) // My Name is Masana.
 }
