@@ -2,6 +2,9 @@ package main
 
 import "fmt"
 
+/*
+Vertex ...
+*/
 type Vertex struct {
 	// 宣言は外部読み込みする場合は大文字でかく
 	X int
