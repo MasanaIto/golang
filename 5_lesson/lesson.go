@@ -2,20 +2,22 @@ package main
 
 import "fmt"
 
-func one(x *int) {
-	*x = 1
-}
-
 func main() {
-	var n int = 100
-	one(&n)
-	fmt.Println(n) // 100
 
-	// fmt.Println(&n) // 0xc00008a008
+	// make は ポインタを返さない
+	s := make([]int, 0)
+	fmt.Printf("%T\n", s) // []int
 
-	// var p *int = &n
+	m := make(map[string]int)
+	fmt.Printf("%T\n", m) // map[string]int
 
-	// fmt.Println(p) // 0xc00008a008
+	ch := make(chan int) // chan int
+	fmt.Printf("%T\n", ch)
 
-	// fmt.Println(*p) // 100
+	// new は ポインタを返す
+	var p *int = new(int)
+	fmt.Printf("%T\n", p) // *int
+
+	var st = new(struct{}) // *struct {}
+	fmt.Printf("%T\n", st)
 }
