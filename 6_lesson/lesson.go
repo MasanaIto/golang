@@ -2,34 +2,30 @@ package main
 
 import "fmt"
 
-/*
-Vertex ... 座標X, Yを扱う
-*/
-type Vertex struct {
-	X, Y int
+type Human interface {
+	Say() string
 }
 
-/*
-Area ... 値レシーバー
-*/
-func (v Vertex) Area() int {
-	return v.X * v.Y
+type Person struct {
+	Name string
 }
 
-/*
-Scale ... ポインタレシーバー
-アスタリスクをつけることで、Vertexの値の中身を書き換えることができる
-*/
-func (v *Vertex) Scale(i int) {
-	v.X = v.X * i
-	v.Y = v.Y * i
+func (p *Person) Say() string {
+	p.Name = p.Name
+	fmt.Println(p.Name)
+	return p.Name
+}
+
+func Access(human Human) {
+	if human.Say() == "Masana" {
+		fmt.Println("OK, WELCOME MASANA.")
+	} else {
+		fmt.Println("You do not have access")
+	}
 }
 
 func main() {
-	v := Vertex{3, 4}
-
-	// メソッドは .（ドット）で呼び出せる
-	fmt.Println(v.Area()) // 12
-	v.Scale(10)
-	fmt.Println(v.Area()) // 1200
+	var masana Human = &Person{"Masana"}
+	masana.Say() // Mr.Masana
+	Access(masana)
 }
