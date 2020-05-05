@@ -2,17 +2,30 @@ package main
 
 import "fmt"
 
-// バッファ...記憶単位間のデータ転送において一時的にデータを記憶すること
-func main() {
-	// チャネルのバッファは2まで
-	ch := make(chan int, 2)
-	ch <- 100
-	fmt.Println(len(ch))
-	ch <- 200
-	fmt.Println(len(ch))
-	close(ch)
+func goroutine1(s []int, c chan int) {
+	sum := 0
+	for _, v := range s {
+		sum += v
+		c <- sum
+	}
+	// close
+	close(c)
+}
 
-	for c := range ch {
-		fmt.Println(c)
+// rangeとcloseで、結果がわかると随時channelに渡す処理
+
+func main() {
+	s := []int{1, 2, 3, 4, 5}
+	c := make(chan int, len(s))
+	go goroutine1(s, c)
+	// range
+	for i := range c {
+		fmt.Println(i)
+		// 実行結果
+		// 1
+		// 3
+		// 6
+		// 10
+		// 15
 	}
 }
