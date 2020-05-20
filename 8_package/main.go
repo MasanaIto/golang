@@ -1,9 +1,9 @@
 package main
 
 import (
-	"Project/mylib"
-	"Project/mylib/under"
 	"fmt"
+	"udemy/lessons/8_package/mylib"
+	"udemy/lessons/8_package/mylib/under"
 )
 
 func main() {
