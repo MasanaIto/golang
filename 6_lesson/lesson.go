@@ -29,6 +29,6 @@ func (v Vertex) String() string {
 }
 
 func main() {
-	v := Vertex{3, 4}
+	v := Vertex{3, 5}
 	fmt.Println(v) // X is 3! Y is 4!
 }
