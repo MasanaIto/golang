@@ -12,4 +12,6 @@ func main() {
 
 	mylib.Say()
 	under.Hello()
+	person := mylib.Person{Name: "Mike", Age: 20}
+	fmt.Println(person)
 }
