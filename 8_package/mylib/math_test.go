@@ -1,6 +1,14 @@
 package mylib
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
+
+func ExampleAverage() {
+	v := Average([]int{1, 2, 3, 4, 5})
+	fmt.Println(v)
+}
 
 func TestAverage(t *testing.T) {
 	v := Average([]int{1, 2, 3, 4, 5})

@@ -3,8 +3,10 @@ package mylib
 import "fmt"
 
 type Person struct {
+	// Name
 	Name string
-	Age  int
+	// Age
+	Age int
 }
 
 func Say() {
