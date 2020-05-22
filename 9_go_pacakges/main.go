@@ -2,15 +2,25 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"sort"
 )
 
 func main() {
-	t := time.Now()
-	fmt.Println(t)
-	// 2020-05-21 23:24:45.647641 +0900 JST m=+0.000063878
-	fmt.Println(t.Format(time.RFC3339))
-	// 2020-05-21T23:24:45+09:00
-	fmt.Println(t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second())
-	// 2020 May 21 23 24 45
+	i := []int{5, 3, 2, 8, 7}
+	s := []string{"d", "a", "f"}
+	p := []struct {
+		Name string
+		Age  int
+	}{
+		{"Nacy", 20},
+		{"Masana", 20},
+		{"ruby", 34},
+		{"Bobby", 30},
+	}
+	fmt.Println(i, s, p)
+	sort.Ints(i)
+	sort.Strings(s)
+	sort.Slice(p, func(i, j int) bool { return p[i].Name < p[j].Name })
+	sort.Slice(p, func(i, j int) bool { return p[i].Age < p[j].Age })
+	fmt.Println(i, s, p)
 }
