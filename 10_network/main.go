@@ -1,14 +1,21 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
 )
 
+type Person struct {
+	Name      string
+	Age       int
+	Nicknames []string
+}
+
 func main() {
-	resp, _ := http.Get("http://example.com")
-	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println(string(body))
+	b := []byte(`{"name":"masana", "age":20,"nicknames":["a","b","c"]}`)
+	var p Person
+	if err := json.Unmarshal(b, &p); err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(p.Name, p.Age, p.Nicknames)
 }
