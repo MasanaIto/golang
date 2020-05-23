@@ -6,9 +6,9 @@ import (
 )
 
 type Person struct {
-	Name      string
-	Age       int
-	Nicknames []string
+	Name      string   `json:"name"`
+	Age       int      `json:"age,string"`
+	Nicknames []string `json:nicknames`
 }
 
 func main() {
@@ -17,5 +17,8 @@ func main() {
 	if err := json.Unmarshal(b, &p); err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(p.Name, p.Age, p.Nicknames)
+	fmt.Println(p.Name, p.Age, p.Nicknames) // masana 0 [a b c]
+
+	v, _ := json.Marshal(p)
+	fmt.Println(string(v)) // {"name":"masana","age":"0","Nicknames":["a","b","c"]}
 }
