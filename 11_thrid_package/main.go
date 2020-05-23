@@ -8,11 +8,12 @@ import (
 	"golang.org/x/sync/semaphore"
 )
 
-var s *semaphore.Weighted = semaphore.NewWeighted(3)
+var s *semaphore.Weighted = semaphore.NewWeighted(1)
 
 func longProcess(ctx context.Context) {
-	if err := s.Acquire(ctx, 1); err != nil {
-		fmt.Println(err)
+	isAcquire := s.TryAcquire(1)
+	if !isAcquire {
+		fmt.Println("Could not get lock")
 		return
 	}
 	defer s.Release(1)
@@ -26,14 +27,16 @@ func main() {
 	go longProcess(ctx)
 	go longProcess(ctx)
 	go longProcess(ctx)
+	time.Sleep(2 * time.Second)
+	go longProcess(ctx)
 	time.Sleep(5 * time.Second)
 }
 
 // 出力結果
 //
 // Wait...
-// Wait...
-// Wait...
+// Could not get lock
+// Could not get lock
 // Done
-// Done
+// Wait...
 // Done
