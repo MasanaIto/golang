@@ -1,6 +1,11 @@
 package main
 
-import "io/ioutil"
+import (
+	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
+)
 
 type Page struct {
 	Title string
@@ -21,7 +26,14 @@ func loadPage(title string) (*Page, error) {
 	return &Page{Title: title, Body: body}, nil
 }
 
+func viewHandler(w http.ResponseWriter, r *http.Request) {
+	// localhost:8080/view/test
+	title := r.URL.Path[len("/view/"):]
+	p, _ := loadPage(title)
+	fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
+}
+
 func main() {
-	p1 := &Page{Title: "test", Body: []byte("This is a sample Page.")}
-	p1.save()
+	http.HandleFunc("/view/", viewHandler)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
