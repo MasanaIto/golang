@@ -32,25 +32,17 @@ func main() {
 	// 	log.Fatalln(err)
 	// }
 
-	// マルチセレクト
-	cmd = "SELECT * FROM person"
-	rows, _ := DbConnection.Query(cmd)
-	defer rows.Close()
-	var pp []Person
-	for rows.Next() {
-		var p Person
-		err := rows.Scan(&p.Name, &p.Age)
-		if err != nil {
+	// シングルセレクト
+	cmd = "SELECT * FROM person WHERE age = ?"
+	row := DbConnection.QueryRow(cmd, 20)
+	var p Person
+	err = row.Scan(&p.Name, &p.Age)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			log.Println("No row")
+		} else {
 			log.Println(err)
 		}
-		pp = append(pp, p)
 	}
-	// まとめてエラーを取得して最後に実行
-	err = rows.Err()
-	if err != nil {
-		log.Fatalln(err)
-	}
-	for _, p := range pp {
-		fmt.Println(p.Name, p.Age)
-	}
+	fmt.Println(p.Name, p.Age)
 }
