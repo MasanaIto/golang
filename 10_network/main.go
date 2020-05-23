@@ -8,7 +8,7 @@ import (
 type Person struct {
 	Name      string   `json:"name"`
 	Age       int      `json:"age,string"`
-	Nicknames []string `json:nicknames`
+	Nicknames []string `json:"nicknames"`
 }
 
 func main() {
@@ -20,5 +20,5 @@ func main() {
 	fmt.Println(p.Name, p.Age, p.Nicknames) // masana 0 [a b c]
 
 	v, _ := json.Marshal(p)
-	fmt.Println(string(v)) // {"name":"masana","age":"0","Nicknames":["a","b","c"]}
+	fmt.Println(string(v)) // {"name":"masana","age":"0","nicknames":["a","b","c"]}
 }
