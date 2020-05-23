@@ -3,34 +3,16 @@ package main
 import (
 	"fmt"
 
-	"gopkg.in/ini.v1"
+	"github.com/markcheno/go-quote"
+	"github.com/markcheno/go-talib"
 )
 
-type ConfigList struct {
-	Port      int
-	DbName    string
-	SQLDriver string
-}
-
-var Config ConfigList
-
-func init() {
-	cfg, _ := ini.Load("config.ini")
-	Config = ConfigList{
-		Port:      cfg.Section("web").Key("port").MustInt(),
-		DbName:    cfg.Section("db").Key("name").MustString("example.sql"),
-		SQLDriver: cfg.Section("db").Key("driver").String(),
-	}
-}
-
 func main() {
-	fmt.Printf("%T %v\n", Config.Port, Config.Port)
-	fmt.Printf("%T %v\n", Config.DbName, Config.DbName)
-	fmt.Printf("%T %v\n", Config.SQLDriver, Config.SQLDriver)
-
+	spy, _ := quote.NewQuoteFromYahoo(
+		"spy", "2020-04-01", "2020-04-05", quote.Daily, true)
+	fmt.Print(spy.CSV())
+	rsi2 := talib.Rsi(spy.Close, 1)
+	fmt.Println(rsi2)
+	mva := talib.Ema(spy.Close, 5)
+	fmt.Println(mva)
 }
-
-// 実行結果 ... config.iniを読み込んでいる
-// int 8080
-// string stockdata.sql
-// string sqlite3
